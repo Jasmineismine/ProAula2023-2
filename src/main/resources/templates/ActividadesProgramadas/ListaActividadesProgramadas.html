@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+    <head th:replace="plantillas/partes :: head"></head>
+    <body>
+        <header th:replace="plantillas/partes :: header"></header>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12"><br>
+                    <center>
+                        <h3>Modulo De Actividades Programadas</h3>
+                    </center>
+		<div class="row">
+                    <div class="col-md-3">	
+                        <a class="btn btn-block btn-primary" th:href="@{/RegistrarActividadProgramada}">
+                            Programar Actividad
+                        </a>
+                    </div><br><br>
+                    <div class="col-md-9">
+                        <form role="form" th:action="@{/ActividadesProgramadas}">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="palabra" id="palabra" th:value="${palabra}" placeholder="Buscar Por Nombre o Periodo"/> 
+                                <div class="input-group-append" style="margin-left: 10px" >
+                                    <button class="btn btn-primary" type="submit" style="padding: 0px 20px">
+                                        Buscar
+                                    </button>
+                                </div>    
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div th:if="${actividadesProgramadas != null and !actividadesProgramadas.empty}">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr class="bg-primary">
+                                <th class="text-center">ID</th>
+                                <th class="text-center">NOMBRE</th>
+                                <th class="text-center">CATEGORIA</th>
+                                <th class="text-center">PERIODO</th>
+                                <th class="text-center">FECHA INICIO</th>
+                                <th class="text-center">FECHA FIN</th>
+                                <th class="text-center">ESTADO</th>
+                                <th class="text-center">ACCIONES </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="ap: ${actividadesProgramadas}">
+                                <td th:text="${ap.idActividadProgramada}" class="text-center"></td>
+                                <td th:text="${ap.actividad.nombre}" class="text-center"></td>
+                                <td th:text="${ap.actividad.tipo}" class="text-center"></td>
+                                <td th:text="${ap.periodo}" class="text-center"></td>
+                                <td th:text="${ap.fechaInicio}" class="text-center"></td>
+                                <td th:text="${ap.fechaFin}" class="text-center"></td>
+                                <td th:text="${ap.estado}" class="text-center"></td>
+                                <td class="text-center">
+                                    <a class="btn btn-info" th:href="@{/EditarActividadProgramada/}+${ap.idActividadProgramada}">EDITAR</a>
+                                    <a class="btn btn-danger" th:onclick="eliminar([[${ap.idActividadProgramada}]],'/EliminarActividadProgramada/','/ActividadesProgramadas')">ELIMINAR</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div th:if="${actividadesProgramadas == null or actividadesProgramadas.empty}">
+                    <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                        <strong>La Lista De Actividades Programadas Esta Vacia</strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
