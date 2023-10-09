@@ -53,6 +53,7 @@
                                 <td th:text="${ap.fechaFin}" class="text-center"></td>
                                 <td th:text="${ap.estado}" class="text-center"></td>
                                 <td class="text-center">
+                                    <a class="btn btn-success">HORARIOS</a>
                                     <a class="btn btn-info" th:href="@{/EditarActividadProgramada/}+${ap.idActividadProgramada}">EDITAR</a>
                                     <a class="btn btn-danger" th:onclick="eliminar([[${ap.idActividadProgramada}]],'/EliminarActividadProgramada/','/ActividadesProgramadas')">ELIMINAR</a>
                                 </td>

@@ -8,12 +8,14 @@ import java.util.List;
 import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @Slf4j
@@ -26,9 +28,10 @@ public class EstudianteControlador {
     IProgramaServicios programService;
     
     @GetMapping("/Estudiantes")
-    public String listarEstudiantes(Model modelo){
-        List<Estudiantes> listaEstudiantes = (List<Estudiantes>)studentService.listarEstudiantes();
+    public String listarEstudiantes(Model modelo, @Param("palabra")String palabra){
+        List<Estudiantes> listaEstudiantes = (List<Estudiantes>)studentService.listarEstudiantes(palabra);
         modelo.addAttribute("estudiantes", listaEstudiantes);
+        modelo.addAttribute("palabra", palabra);
         log.info("Ejecuntando el controlador listar estudiantes");
         return "Estudiantes/ListaEstudiantes";
     }
@@ -43,16 +46,39 @@ public class EstudianteControlador {
     }
     
     @PostMapping("/GuardarEstudiante")
-    public String guardarEstudiante(@Valid @ModelAttribute Estudiantes estudiante , Errors errores){
+    public String guardarEstudiante(@Valid @ModelAttribute Estudiantes estudiante , Errors errores, Model modelo, RedirectAttributes atributos){
         if(errores.hasErrors()){
-            log.info("Ejecuntando el controlador guardar estudiante con errores");
-            estudiante.setEstado("Activo");
-            studentService.guardarEstudiante(estudiante);
-            return "redirect:/Estudiantes";
+            modelo.addAttribute("estudiante", new Estudiantes());
+            modelo.addAttribute("programas", programService.listarProgramas(null));
+            atributos.addFlashAttribute("danger", "Ha Ocurrido Un Error");
+            return "Estudiantes/FormularioEstudiantes";
         }
         estudiante.setEstado("Activo");
-        studentService.guardarEstudiante(estudiante);
-        log.info("Ejecuntando el controlador guardar estudiante sin errores");
+        estudiante.setTipo("Estudiante");
+        if(estudiante.getIdUsuario() == 0){
+            studentService.guardarEstudiante(estudiante);
+            atributos.addFlashAttribute("success", "Estudiante Registrado Exitosamente");
+        }else{
+            studentService.guardarEstudiante(estudiante);
+            atributos.addFlashAttribute("success", "Estudiante Modificado Exitosamente");
+        }
+        return "redirect:/Estudiantes";
+    }
+    
+    @GetMapping("/EditarEstudiante/{idUsuario}")
+    public String editarEstudiante(Estudiantes estudiante, Model modelo){
+        estudiante = studentService.buscarEstudiante(estudiante);
+        modelo.addAttribute("programas", programService.listarProgramas(null));
+        modelo.addAttribute("estudiante", estudiante);
+        return "Estudiantes/FormularioEstudiantes";
+    }
+    
+    @GetMapping("/EliminarEstudiante/{idUsuario}")
+    public String eliminarEstudiante(Estudiantes estudiante, RedirectAttributes atributos){
+        Estudiantes e = studentService.buscarEstudiante(estudiante);
+        e.setEstado("Eliminado");
+        studentService.guardarEstudiante(e);
+        atributos.addFlashAttribute("warning", "Estudiante Eliminado");
         return "redirect:/Estudiantes";
     }
 }
