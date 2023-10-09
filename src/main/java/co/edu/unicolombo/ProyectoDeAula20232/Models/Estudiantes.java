@@ -3,7 +3,6 @@ package co.edu.unicolombo.ProyectoDeAula20232.Models;
 
 import java.io.Serializable;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -15,10 +14,9 @@ import lombok.EqualsAndHashCode;
 
 @Entity
 @Table(name="Estudiantes", catalog = "ProAula_BD")
-@DiscriminatorValue("Estudiante")
 @Data
 @EqualsAndHashCode(callSuper = true)
-@PrimaryKeyJoinColumn(name = "idUsuario", referencedColumnName = "cedula")
+@PrimaryKeyJoinColumn(name = "idUsuario", referencedColumnName = "idUsuario")
 public class Estudiantes extends Usuarios implements Serializable{
     
     private static final long serialVersionUID = 1L;

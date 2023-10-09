@@ -17,9 +17,9 @@
                         </a>
                     </div><br><br>
                     <div class="col-md-9">
-                        <form role="form" action="" method="post">
+                        <form role="form" th:action="@{/Estudiantes}">
                             <div class="input-group">
-                                <input type="text" class="form-control" name="buscar" id="buscar" placeholder="Buscar Por Nombre"/> 
+                                <input type="text" class="form-control" name="palabra" id="palabra" placeholder="Buscar Por Nombre"/> 
                                 <div class="input-group-append" style="margin-left: 10px" >
                                     <button class="btn btn-primary" type="submit" style="padding: 0px 20px">
                                         Buscar
@@ -47,16 +47,16 @@
                         <tbody>
                             <tr th:each="e: ${estudiantes}">
                                 <td th:text="${e.cedula}" class="text-center"></td>
-                                <td th:text="${e.codigo}" class="text-center"></td>
+                                <td th:text="${e.codigoEstudiantil}" class="text-center"></td>
                                 <td th:text="${e.nombre}" class="text-center"></td>
                                 <td th:text="${e.apellidos}" class="text-center"></td>
                                 <td th:text="${e.correo}" class="text-center"></td>    
                                 <td th:text="${e.telefono}" class="text-center"></td>
-                                <td th:text="${e.idPrograma}" class="text-center"></td>
+                                <td th:text="${e.programa.nombre}" class="text-center"></td>
                                 <td th:text="${e.semestre}" class="text-center"></td>
                                 <th class="text-center">
-                                    <a class="btn btn-info" th:href="">EDITAR</a>
-                                    <a class="btn btn-danger" th:onclick="">ELIMINAR</a>
+                                    <a class="btn btn-info" th:href="@{/EditarEstudiante/}+${e.idUsuario}">EDITAR</a>
+                                    <a class="btn btn-danger" th:onclick="eliminar([[${e.idUsuario}]],'/EliminarEstudiante/','/Estudiantes')">ELIMINAR</a>
                                 </th>
                             </tr>
                         </tbody>

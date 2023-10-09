@@ -13,8 +13,8 @@
                         </a>
                     </div>
                     <center>
-                        <h3 th:if="${actividad.idActividad} == null or ${actividad.nombre} == null">Registrar Actividad</h3>
-                        <h3 th:unless="${actividad.idActividad} == null or ${actividad.nombre} == null">Modificar Actividad</h3>
+                        <h3 th:if="${actividad.idActividad} == 0 or ${actividad.nombre} == null">Registrar Actividad</h3>
+                        <h3 th:unless="${actividad.idActividad} == 0 or ${actividad.nombre} == null">Modificar Actividad</h3>
                     </center>
                     <div class="row">
                         <div class="col-md-2">
@@ -40,10 +40,10 @@
                                         <option th:value="Deportiva" >Deportiva</option>
                                     </select>
                                 </div><br>
-                                <button type="submit" class="btn btn-primary" th:if="${actividad.idActividad} == null or ${actividad.nombre} == null">
+                                <button type="submit" class="btn btn-primary" th:if="${actividad.idActividad} == 0 or ${actividad.nombre} == null">
                                     Registrar
                                 </button>
-                                <button type="submit" class="btn btn-primary" th:unless="${actividad.idActividad} == null or ${actividad.nombre} == null">
+                                <button type="submit" class="btn btn-primary" th:unless="${actividad.idActividad} == 0 or ${actividad.nombre} == null">
                                     Modificar
                                 </button>
                                 <button type="reset" class="btn btn-danger">

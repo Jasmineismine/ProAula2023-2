@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-public interface ICrudProgramas extends JpaRepository<Programas, String>{
+public interface ICrudProgramas extends JpaRepository<Programas, Integer>{
     
     @Query("SELECT p FROM Programas p WHERE p.estado = 'Activo'")
     public List<Programas> listarProgramasActivos();
