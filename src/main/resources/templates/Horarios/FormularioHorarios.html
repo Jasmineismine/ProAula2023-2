@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+    <head th:replace="plantillas/partes :: head"></head>
+    <body>
+         <header th:replace="plantillas/partes :: header"></header>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12"><br>
+                    <div class="col-md-3" style="margin-left: 15px">
+                        <a class="btn btn-primary" th:href="@{/Estudiantes}">
+                            Regresar
+                        </a>
+                    </div>
+                    <center>
+                        <h3>Registrar Horario</h3>
+                    </center>
+                    <div class="row">
+                        <div class="col-md-2">
+                            
+                        </div>
+                        <div class="col-md-8">
+                            <form th:action="@{/GuardarHorario}" method="POST" th:object="${horario}">
+                                
+                                <div class="form-group" style="margin-bottom: 1px">
+                                    <label for="horaInicio" style="margin: 0px">
+                                        Dia
+                                    </label>
+                                    <input type="date" class="form-control" name="horaInicio" id="horaInicio" placeholder="Hora De Inicio" th:field="*{horaInicio}" required />
+                                </div>
+                                <div class="form-group" style="margin-bottom: 1px">
+                                    <label for="horaInicio" style="margin: 0px">
+                                        Hora De Inicio
+                                    </label>
+                                    <input type="time" class="form-control" name="horaInicio" id="horaInicio" placeholder="Hora De Inicio" th:field="*{horaInicio}" required />
+                                </div>
+                                <div class="form-group" style="margin-bottom: 1px">
+                                    <label for="horaFin" style="margin: 0px">
+                                        Hora Final
+                                    </label>
+                                    <input type="time" class="form-control" name="horaFin" id="horaFin" placeholder="Hora Final" th:field="*{horaFin}" required/>
+                                </div>
+                               
+                                <div class="form-group" style="margin-bottom: 1px">
+                                    <label for="actividad" style="margin: 0px">
+                                        Actividad
+                                    </label>
+                                    <select class="form-control" name="actividad" id="actividad" required >
+                                        <option value= 0 >Seleccione Una Actividad</option>
+                                        <div th:each="a: ${actividades}">
+                                            <option th:value="${a.idActividad}" th:text="${a.nombre}"></option>
+                                        </div>
+                                    </select>
+                                </div>
+                               <br>
+                                <button type="submit" name="guardar" class="btn btn-primary">
+                                    Registrar
+                                </button>
+                                <button type="reset" class="btn btn-danger">
+                                    Limpiar
+                                </button>
+                            </form>
+                        </div>
+                        <div class="col-md-2">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

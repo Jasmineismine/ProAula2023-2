@@ -1,4 +1,3 @@
-
 package co.edu.unicolombo.ProyectoDeAula20232.Models;
 
 import java.io.Serializable;
