@@ -13,8 +13,8 @@
                         </a>
                     </div>
                     <center>
-                        <h3 th:if="${programa.idPrograma == null}">Registrar Programa</h3>
-                        <h3 th:unless="${programa.idPrograma == null}">Modificar Programa</h3>
+                        <h3 th:if="${programa.idPrograma == 0}">Registrar Programa</h3>
+                        <h3 th:unless="${programa.idPrograma == 0}">Modificar Programa</h3>
                     </center>
                     <div class="row">
                         <div class="col-md-2">
@@ -23,10 +23,13 @@
                         <div class="col-md-8">
                             <form th:action="@{/GuardarPrograma}" method="POST" th:object="${programa}">
                                 <div class="form-group" style="margin-bottom: 1px">
+                                    <input type="hidden" class="form-control" name="idPrograma" id="idPrograma" th:field="*{idPrograma}" />
+                                </div>
+                                <div class="form-group" style="margin-bottom: 1px">
                                     <label for="codigo" style="margin: 0px">
                                         Codigo
                                     </label>
-                                    <input type="text" class="form-control" name="codigo" id="codigo" placeholder="Codigo" th:field="*{idPrograma}" required />
+                                    <input type="text" class="form-control" name="codigo" id="codigo" placeholder="Codigo" th:field="*{codigoPrograma}" required />
                                 </div>
                                 <div class="form-group" style="margin-bottom: 1px">
                                     <label for="nombre" style="margin: 0px">
@@ -40,10 +43,10 @@
                                     </label>
                                     <input type="number" class="form-control" name="semestres" id="semestres" placeholder="Semestres" th:field="*{semestresTotales}" required/>
                                 </div><br>
-                                <button type="submit" class="btn btn-primary" th:if="${programa.idPrograma == null}">
+                                <button type="submit" class="btn btn-primary" th:if="${programa.idPrograma == 0}">
                                     Registrar
                                 </button>
-                                <button type="submit" class="btn btn-primary" th:unless="${programa.idPrograma == null}">
+                                <button type="submit" class="btn btn-primary" th:unless="${programa.idPrograma == 0}">
                                     Modificar
                                 </button>
                                 <button type="reset" class="btn btn-danger">

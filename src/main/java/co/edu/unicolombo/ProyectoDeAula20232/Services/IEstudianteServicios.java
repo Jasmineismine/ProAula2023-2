@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IEstudianteServicios {
        
-    public List<Estudiantes> listarEstudiantes();
+    public List<Estudiantes> listarEstudiantes(String palabra);
     
     public void guardarEstudiante(Estudiantes student);
     

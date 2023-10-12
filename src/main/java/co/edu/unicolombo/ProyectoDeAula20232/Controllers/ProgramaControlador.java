@@ -41,11 +41,17 @@ public class ProgramaControlador {
     public String guardarPrograma(@Valid Programas programa , Errors errores, Model modelo, RedirectAttributes atributos){
         if(errores.hasErrors()){
             modelo.addAttribute("programa", new Programas());
+            atributos.addFlashAttribute("danger", "Ha Ocurrido Un Error");
             return "Programas/FormularioProgramas";
         }
         programa.setEstado("Activo");
-        programService.guardarPrograma(programa);
-        atributos.addFlashAttribute("success", "Programa Registrado Exitosamente");
+        if(programa.getIdPrograma() == 0){
+            programService.guardarPrograma(programa);
+            atributos.addFlashAttribute("success", "Programa Registrado Exitosamente");
+        }else{
+            programService.guardarPrograma(programa);
+            atributos.addFlashAttribute("success", "Programa Modificado Exitosamente");
+        }
         return "redirect:/Programas";
     }
     

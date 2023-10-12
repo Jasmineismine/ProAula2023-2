@@ -15,9 +15,11 @@ public class EstudianteServicioImp implements IEstudianteServicios{
     private ICrudEstudiantes crudEstudiante;
     
     @Override
-    public List<Estudiantes> listarEstudiantes() {
-       List<Estudiantes> listaEstudiantes = (List<Estudiantes>)crudEstudiante.findAll();
-       return listaEstudiantes;
+    public List<Estudiantes> listarEstudiantes(String palabra) {
+       if(palabra != null){
+           return crudEstudiante.buscarEstudiantes(palabra);
+       }
+       return crudEstudiante.listarEstudiantesActivos();
     }
 
     @Override
@@ -32,7 +34,7 @@ public class EstudianteServicioImp implements IEstudianteServicios{
 
     @Override
     public Estudiantes buscarEstudiante(Estudiantes student) {
-        return crudEstudiante.findById(student.getCedula()).orElse(null);
+        return crudEstudiante.findById(student.getIdUsuario()).orElse(null);
     }
     
 }
